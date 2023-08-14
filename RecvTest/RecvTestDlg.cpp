@@ -182,7 +182,7 @@ void CRecvTestDlg::OnBnClickedButtonDelete()
 }
 void CRecvTestDlg::OnBnClickedButtonSave()
 {
-	
+	/*
 	
 	LPCTSTR lpszFilter = _T("TXT Files(*.txt)|*.txt|");
 
@@ -210,6 +210,22 @@ void CRecvTestDlg::OnBnClickedButtonSave()
 		}
 		
      }
+	*/
+	CStdioFile file;
+	m_sFilePath = _T("F:\\Memo\\txt\\aaa.txt");
+	//CFile::modeCreate
+	if (file.Open(m_sFilePath,   CFile::modeNoTruncate | CFile::modeReadWrite | CFile::typeText))
+	{
+		CString line;
+		for (int i = 0; i < m_listOutput.GetCount(); ++i) {
+			m_listOutput.GetText(i, line);
+			line += _T("\n");
+			file.Write((LPCTSTR)line, line.GetLength() * sizeof(TCHAR));
+		}
+		file.SeekToEnd();
+		file.Close();
+		AfxMessageBox(_T("저장성공"));
+	}
 
 
 }
